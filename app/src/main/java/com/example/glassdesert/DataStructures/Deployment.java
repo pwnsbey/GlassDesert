@@ -23,12 +23,16 @@ public class Deployment {
         switch (travelStatus) {
             case 0:
                 deploymentString = "En route to ";
+                break;
             case 1:
                 deploymentString = "Fighting at ";
+                break;
             case 2:
                 deploymentString = "Returning from ";
+                break;
             default:
                 deploymentString = "BAD DEPLOYMENT ID";
+                break;
         }
         deploymentString += locationName += ".";
         return deploymentString;

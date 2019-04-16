@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Glass Desert</string>
-    <string name="btn_map_label">Map</string>
+    <string name="btn_misc_label">Misc</string>
     <string name="btn_cohort_label">Cohort</string>
     <string name="btn_overview_label">Overview</string>
     <string name="btn_buildings_label">Buildings</string>

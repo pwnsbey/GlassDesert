@@ -61,12 +61,13 @@
             app:layout_constraintVertical_bias="1.0">
 
             <Button
-                android:id="@+id/btn_map"
+                android:id="@+id/btn_misc"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/btn_map_label" />
+                android:text="@string/btn_misc_label"
+                android:onClick="onNavButtonClick" />
 
             <Button
                 android:id="@+id/btn_cohort"
@@ -74,7 +75,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/btn_cohort_label" />
+                android:text="@string/btn_cohort_label"
+                android:onClick="onNavButtonClick" />
 
             <Button
                 android:id="@+id/btn_overview"
@@ -82,15 +84,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/btn_overview_label" />
-
-            <Button
-                android:id="@+id/btn_inventory"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/btn_inventory_label" />
+                android:text="@string/btn_overview_label"
+                android:onClick="onNavButtonClick" />
 
             <Button
                 android:id="@+id/btn_buildings"
@@ -98,7 +93,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/btn_buildings_label" />
+                android:text="@string/btn_buildings_label"
+                android:onClick="onNavButtonClick" />
+
+            <Button
+                android:id="@+id/btn_inventory"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/btn_inventory_label"
+                android:onClick="onNavButtonClick" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.glassdesert.DataStructures.Buildings.Building;
 import com.example.glassdesert.DataStructures.Fighter;
 
 import java.util.ArrayList;
@@ -14,29 +15,65 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.StatusRowViewHolder> {
+    final private ClickListener onClickListener;
     private ArrayList<String> names;
     private ArrayList<String> statuses;
     private ArrayList<String> timesRemaining;
 
-    public StatusRowAdapter(ArrayList<String> names,
+    public interface ClickListener {
+        void onStatusRowClick(int clickedStatusRow);
+    }
+
+    public StatusRowAdapter(ClickListener onClickListener,
+                            ArrayList<String> names,
                             ArrayList<String> statuses,
                             ArrayList<String> timesRemaining) {
+        this.onClickListener = onClickListener;
         this.names = names;
         this.statuses = statuses;
         this.timesRemaining = timesRemaining;
     }
 
-    public StatusRowAdapter(ArrayList<Fighter> fighters) {
+    // "mode" refers to which fighters to show.
+    // 0 - all fighters
+    // 1 - deployed fighters
+    public StatusRowAdapter(ClickListener onClickListener,
+                            ArrayList<Fighter> fighters,
+                            int mode) {
+        this.onClickListener = onClickListener;
         names = new ArrayList<>();
         statuses = new ArrayList<>();
         timesRemaining = new ArrayList<>();
 
         for (Fighter fighter : fighters) {
-            if (fighter.deployment != null) {
-                names.add(fighter.name);
-                statuses.add(fighter.deployment.getDeploymentString());
-                timesRemaining.add(fighter.deployment.timeRemaining);
+            switch (mode) {
+                case 0:
+                    addFighter(fighter);
+                    break;
+                case 1:
+                    if (fighter.deployment != null)
+                        addFighter(fighter);
             }
+        }
+    }
+    // small helper function to improve readability
+    public void addFighter(Fighter fighter) {
+        names.add(fighter.name);
+        statuses.add(fighter.getStatusString());
+        timesRemaining.add(fighter.getTimeRemaining());
+    }
+
+    public StatusRowAdapter(ClickListener onClickListener,
+                            ArrayList<Building> buildings) {
+        this.onClickListener = onClickListener;
+        names = new ArrayList<>();
+        statuses = new ArrayList<>();
+        timesRemaining = new ArrayList<>();
+
+        for (Building building : buildings) {
+            names.add(building.getName());
+            statuses.add(building.getUpgradingString());
+            timesRemaining.add(building.getTimeRemaining());
         }
     }
 
@@ -62,13 +99,14 @@ public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.Stat
         return names.size();
     }
 
-    class StatusRowViewHolder extends RecyclerView.ViewHolder {
+    class StatusRowViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_item_name;
         TextView tv_item_status;
         TextView tv_item_time_remaining;
 
         private StatusRowViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
 
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
             tv_item_status = itemView.findViewById(R.id.tv_item_status);
@@ -79,6 +117,12 @@ public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.Stat
             tv_item_name.setText(names.get(index));
             tv_item_status.setText(statuses.get(index));
             tv_item_time_remaining.setText(timesRemaining.get(index));
+        }
+
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            onClickListener.onStatusRowClick(clickedPosition);
         }
     }
 }
