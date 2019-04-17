@@ -22,14 +22,15 @@ public class FighterDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fighter_details);
 
         // set activity variables
-        archivist = new Archivist();
+        archivist = new Archivist(this);
 
-        fighter = archivist.getFighterById(getIntent().getIntExtra("fighterId", -1));
+        fighter = archivist.getFighterByName(getIntent().getStringExtra("fighterName"));
 
         tvName = findViewById(R.id.tv_name);
         tvGenderRace = findViewById(R.id.tv_gender_race);
 
         tvName.setText(fighter.name);
-        tvGenderRace.setText(fighter.race + " " + fighter.gender);
+        String genderRaceText = fighter.race + " " + fighter.gender;
+        tvGenderRace.setText(genderRaceText);
     }
 }

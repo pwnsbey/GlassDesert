@@ -28,7 +28,7 @@ public class CohortActivity extends AppCompatActivity implements StatusRowAdapte
         setContentView(R.layout.activity_cohort);
 
         // set activity variables
-        archivist = new Archivist();
+        archivist = new Archivist(this);
         fighters = archivist.getFighterCohort();
 
         // set up recycler view
@@ -63,7 +63,7 @@ public class CohortActivity extends AppCompatActivity implements StatusRowAdapte
     @Override
     public void onStatusRowClick(int clickedStatusRow) {
         Intent intent = new Intent(this, FighterDetailsActivity.class);
-        intent.putExtra("fighterId", fighters.get(clickedStatusRow).id);
+        intent.putExtra("fighterName", fighters.get(clickedStatusRow).name);
         startActivity(intent);
     }
 }

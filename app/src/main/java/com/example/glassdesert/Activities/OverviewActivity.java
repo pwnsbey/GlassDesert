@@ -35,7 +35,10 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         setContentView(R.layout.activity_overview);
 
         // set activity variables
-        archivist = new Archivist();
+        archivist = new Archivist(this);
+        // init DB test data
+        // TODO: BY ALL THAT IS GOOD AND HOLY, REMOVE THIS AFTER TESTING
+        initTestData();
         fighters = archivist.getFighterCohort();
         buildings = archivist.getBuildingList();
 
@@ -62,6 +65,23 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         rvBaseProjects.setHasFixedSize(true);
     }
 
+    private void initTestData() {
+        //init tables
+        archivist.setupTestModeTables();
+
+        // add Locke
+        archivist.archiveFighter("Locke Arran", "Male", "Eynsham");
+
+        // add Locke's deployment
+        archivist.archiveDeployment("Aion", "Locke Arran");
+
+        // add Tierras, no deployment because she is cleaning up Locke's mess back at base probably
+        archivist.archiveFighter("Tierras Lin", "Female", "Eynsham");
+
+        // add buildings
+        archivist.archiveBuilding();
+    }
+
     public void onNavButtonClick(View view) {
         switch (view.getId()) {
             case (R.id.btn_misc):
@@ -85,7 +105,7 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
     @Override
     public void onStatusRowClick(int clickedStatusRow) {
         Intent intent = new Intent(this, FighterDetailsActivity.class);
-        intent.putExtra("fighterId", fighters.get(clickedStatusRow).id);
+        intent.putExtra("fighterName", fighters.get(clickedStatusRow).name);
         startActivity(intent);
     }
 }
