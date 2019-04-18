@@ -37,7 +37,7 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         // set activity variables
         archivist = new Archivist(this);
         // init DB test data
-        // TODO: BY ALL THAT IS GOOD AND HOLY, REMOVE THIS AFTER TESTING
+        // TODO: BY ALL THAT IS GOOD AND HOLY, REMOVE THIS FUNCTION CALL AFTER TESTING
         initTestData();
         fighters = archivist.getFighterCohort();
         buildings = archivist.getBuildingList();
