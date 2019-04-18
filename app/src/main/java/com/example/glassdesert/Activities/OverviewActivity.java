@@ -39,6 +39,7 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         // init DB test data
         // TODO: BY ALL THAT IS GOOD AND HOLY, REMOVE THIS FUNCTION CALL AFTER TESTING
         initTestData();
+        // TODO: MOVE ARCHIVIST CALLS TO THEIR OWN THREAD
         fighters = archivist.getFighterCohort();
         buildings = archivist.getBuildingList();
 

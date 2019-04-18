@@ -2,7 +2,7 @@ package com.example.glassdesert.DataStructures;
 
 public class Deployment {
     // TODO: change to an actual Location object
-    public String locationName;
+    public Location location;
     // 0 - en route
     // 1 - at location
     // 2 - returning
@@ -11,8 +11,8 @@ public class Deployment {
     // TODO: change this to an actual Timer object: https://stackoverflow.com/questions/14393423/how-to-make-a-countdown-timer-in-java
     public String timeRemaining;
 
-    public Deployment(String locationName, int travelStatus, String TimeRemaining) {
-        this.locationName = locationName;
+    public Deployment(Location location, int travelStatus, String TimeRemaining) {
+        this.location = location;
         this.travelStatus = travelStatus;
         this.timeRemaining = TimeRemaining;
     }
@@ -34,7 +34,7 @@ public class Deployment {
                 deploymentString = "BAD DEPLOYMENT ID";
                 break;
         }
-        deploymentString += locationName += ".";
+        deploymentString += location.name += ".";
         return deploymentString;
     }
 }
