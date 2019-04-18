@@ -122,6 +122,8 @@ public class Archivist extends SQLiteOpenHelper {
     }
 
     public Fighter getFighterByName(String name) {
+        if (fighters == null)
+            initFighterCohort();
         for (Fighter fighter : fighters) {
             if (fighter.name.equals(name)) {
                 return fighter;

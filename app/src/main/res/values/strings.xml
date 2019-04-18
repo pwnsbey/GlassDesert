@@ -5,4 +5,6 @@
     <string name="btn_overview_label">Overview</string>
     <string name="btn_buildings_label">Buildings</string>
     <string name="btn_inventory_label">Inventory</string>
+    <string name="btn_fighter_deploy_label">Deploy</string>
+    <string name="btn_fighter_equip_label">Equip</string>
 </resources>
