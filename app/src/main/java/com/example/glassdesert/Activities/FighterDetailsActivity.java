@@ -1,5 +1,6 @@
 package com.example.glassdesert.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -32,5 +33,11 @@ public class FighterDetailsActivity extends AppCompatActivity {
         tvName.setText(fighter.name);
         String genderRaceText = fighter.race + " " + fighter.gender;
         tvGenderRace.setText(genderRaceText);
+    }
+
+    public void openDeploymentActivity() {
+        Intent intent = new Intent(this, DeploymentActivity.class);
+        intent.putExtra("fighterName", fighter.name);
+        startActivity(intent);
     }
 }

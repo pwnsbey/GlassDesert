@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.glassdesert.DataStructures.Buildings.Building;
 import com.example.glassdesert.DataStructures.Fighter;
+import com.example.glassdesert.DataStructures.Location;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,21 @@ public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.Stat
             names.add(building.getName());
             statuses.add(building.getUpgradingString());
             timesRemaining.add(building.getTimeRemaining());
+        }
+    }
+
+    public StatusRowAdapter(ClickListener onClickListener,
+                            ArrayList<Location> locations,
+                            Boolean erasureBad) {
+        this.onClickListener = onClickListener;
+        names = new ArrayList<>();
+        statuses = new ArrayList<>();
+        timesRemaining = new ArrayList<>();
+
+        for (Location location : locations) {
+            names.add(location.name);
+            statuses.add(location.getDistanceString());
+            timesRemaining.add(" ");
         }
     }
 

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.FighterDetailsActivity"></activity>
+        <activity android:name=".Activities.DeploymentActivity"></activity>
+        <activity android:name=".Activities.FighterDetailsActivity" />
         <activity android:name=".Activities.CohortActivity" />
         <activity android:name=".Activities.OverviewActivity">
             <intent-filter>

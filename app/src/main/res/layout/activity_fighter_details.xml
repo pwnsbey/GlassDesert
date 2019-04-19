@@ -44,7 +44,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/btn_fighter_deploy_label" />
+            android:text="@string/btn_fighter_deploy_label"
+            android:onClick="openDeploymentActivity"/>
 
         <Button
             android:id="@+id/btn_fighter_equip"

@@ -15,4 +15,8 @@ public class Location {
         this.distance = distance;
         this.isDiscovered = isDiscovered;
     }
+
+    public String getDistanceString() {
+        return String.valueOf(distance) + "farmeasures away";
+    }
 }
