@@ -4,17 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.glassdesert.DataStructures.Buildings.Building;
+import com.example.glassdesert.DataStructures.Deployment;
 import com.example.glassdesert.DataStructures.Fighter;
+import com.example.glassdesert.DataStructures.Location;
 import com.example.glassdesert.R;
 import com.example.glassdesert.StatusRowAdapter;
 import com.example.glassdesert.Utility.Archivist;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class OverviewActivity extends AppCompatActivity implements StatusRowAdapter.ClickListener {
     // TODO: We use archivist literally everywhere, it should be made into a singleton
@@ -70,11 +72,17 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         //init tables
         archivist.setupTestModeTables();
 
+        // add Aion location
+        Location aionLocation = new Location("Aion", 22, true);
+        archivist.archiveLocation(aionLocation);
+
         // add Locke
         archivist.archiveFighter("Locke Arran", "Male", "Eynsham");
 
         // add Locke's deployment
-        archivist.archiveDeployment("Aion", "Locke Arran");
+        archivist.archiveDeployment(
+                new Deployment(aionLocation, 1, "2:22:22"),
+                "Locke Arran");
 
         // add Tierras, no deployment because she is cleaning up Locke's mess back at base probably
         archivist.archiveFighter("Tierras Lin", "Female", "Eynsham");

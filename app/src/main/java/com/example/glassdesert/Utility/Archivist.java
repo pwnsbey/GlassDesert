@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.Nullable;
+
 import com.example.glassdesert.DataStructures.Buildings.Building;
 import com.example.glassdesert.DataStructures.Buildings.CommandBuilding;
 import com.example.glassdesert.DataStructures.Deployment;
@@ -14,10 +16,10 @@ import com.example.glassdesert.DataStructures.Location;
 
 import java.util.ArrayList;
 
-import androidx.annotation.Nullable;
-
 // A utility class for database (Archive) access
 public class Archivist extends SQLiteOpenHelper {
+    private ArrayList<Building> buildings;
+
     private static final String DATABASE_NAME = "Archive.db";
 
     private static final String FIGHTERS_TABLE_NAME = "fighters";
@@ -109,6 +111,8 @@ public class Archivist extends SQLiteOpenHelper {
                     .getString(fighterRes.getColumnIndex(FIGHTERS_COLUMN_RACE));
 
             // deployments take a little extra work since they're on a different table
+            // we don't have a dedicated function for this since we'll never get deployments
+            // on their own without the fighters.
             Deployment deployment = null;
             String deploymentSql = "SELECT * FROM " + DEPLOYMENTS_TABLE_NAME +
                     " WHERE " + DEPLOYMENTS_COLUMN_FIGHTER_NAME + " = \"" + name + "\";";
@@ -117,7 +121,8 @@ public class Archivist extends SQLiteOpenHelper {
                 deploymentRes.moveToFirst();
                 String deploymentLocation = deploymentRes
                         .getString(deploymentRes.getColumnIndex(DEPLOYMENTS_COLUMN_LOCATION_NAME));
-                deployment = new Deployment(deploymentLocation, 1, "2:22:22");
+                Location location = getLocationByName(deploymentLocation, db);
+                deployment = new Deployment(location, 1, "2:22:22");
                 deploymentRes.close();
             }
             fighters.add(new Fighter(name, gender, race, deployment));
@@ -156,11 +161,11 @@ public class Archivist extends SQLiteOpenHelper {
     }
 
     // TODO: Add time, status, and such to this function
-    public void archiveDeployment(Location location, String assignedFighter) {
+    public void archiveDeployment(Deployment deployment, String assignedFighter) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(DEPLOYMENTS_COLUMN_LOCATION_NAME, location.name);
+        values.put(DEPLOYMENTS_COLUMN_LOCATION_NAME, deployment.location.name);
         values.put(DEPLOYMENTS_COLUMN_FIGHTER_NAME, assignedFighter);
 
         db.insert(DEPLOYMENTS_TABLE_NAME, null, values);
@@ -183,7 +188,7 @@ public class Archivist extends SQLiteOpenHelper {
         while (!locationRes.isAfterLast()) {
             String name = locationRes
                     .getString(locationRes.getColumnIndex(LOCATIONS_COLUMN_NAME));
-            Boolean isDiscovered = locationRes
+            boolean isDiscovered = locationRes
                     .getInt(locationRes.getColumnIndex(LOCATIONS_COLUMN_IS_DISCOVERED)) > 0;
             locations.add(new Location(name, 22, isDiscovered));
         }
@@ -197,6 +202,31 @@ public class Archivist extends SQLiteOpenHelper {
         String locationSql = "SELECT * FROM " + LOCATIONS_TABLE_NAME;
         Cursor locationRes = db.rawQuery(locationSql, null);
         return processLocationResults(locationRes, db);
+    }
+
+    public ArrayList<Location> getDiscoveredLocations() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String locationSql = "SELECT * FROM " + LOCATIONS_TABLE_NAME +
+                             " WHERE " + LOCATIONS_COLUMN_IS_DISCOVERED + " = 1;";
+        Cursor locationRes = db.rawQuery(locationSql, null);
+        return processLocationResults(locationRes, null);
+    }
+
+    public Location getLocationByName(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String locationSql = "SELECT * FROM " + LOCATIONS_TABLE_NAME +
+                             " WHERE " + LOCATIONS_COLUMN_NAME + " =\"" + name + "\";";
+        Cursor locationRes = db.rawQuery(locationSql, null);
+        return processLocationResults(locationRes, db).get(0);
+    }
+
+    private Location getLocationByName(String name, SQLiteDatabase db) {
+        String locationSql = "SELECT * FROM " + LOCATIONS_TABLE_NAME +
+                " WHERE " + LOCATIONS_COLUMN_NAME + " =\"" + name + "\";";
+        Cursor locationRes = db.rawQuery(locationSql, null);
+        return processLocationResults(locationRes, db).get(0);
     }
 
     public void archiveLocation(Location location) {

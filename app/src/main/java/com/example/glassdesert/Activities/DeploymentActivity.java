@@ -1,10 +1,10 @@
 package com.example.glassdesert.Activities;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
 
 import com.example.glassdesert.DataStructures.Deployment;
 import com.example.glassdesert.DataStructures.Location;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class DeploymentActivity extends AppCompatActivity implements StatusRowAdapter.ClickListener{
     private Archivist archivist;
     private ArrayList<Location> locations;
+    private String fighterName;
 
     private StatusRowAdapter locationsAdapter;
     private RecyclerView rvLocations;
@@ -28,6 +29,7 @@ public class DeploymentActivity extends AppCompatActivity implements StatusRowAd
 
         archivist = new Archivist(this);
         locations = archivist.getDiscoveredLocations();
+        fighterName = getIntent().getStringExtra("fighterName");
 
         rvLocations = findViewById(R.id.rv_deployment_locations);
         LinearLayoutManager deploymentLocationsLayoutManager = new LinearLayoutManager(this);
@@ -40,6 +42,7 @@ public class DeploymentActivity extends AppCompatActivity implements StatusRowAd
     public void onStatusRowClick(int clickedStatusRow) {
         // what to do when a location is selected
         Deployment deployment = new Deployment(locations.get(clickedStatusRow), 0, "2:22:22");
-        archivist.archiveDeployment();
+        archivist.archiveDeployment(deployment, fighterName);
+        finish();
     }
 }
