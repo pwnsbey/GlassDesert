@@ -41,8 +41,8 @@ public class DeploymentActivity extends AppCompatActivity implements StatusRowAd
     @Override
     public void onStatusRowClick(int clickedStatusRow) {
         // what to do when a location is selected
-        Deployment deployment = new Deployment(locations.get(clickedStatusRow), 0, "2:22:22");
-        archivist.archiveDeployment(deployment, fighterName);
+        Deployment deployment = new Deployment(locations.get(clickedStatusRow), 0, archivist.getFighter(fighterName));
+        deployment.stageDeployment(10000);
         finish();
     }
 }

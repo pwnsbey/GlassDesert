@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.glassdesert.DataStructures.Fighter;
 import com.example.glassdesert.R;
 import com.example.glassdesert.Utility.Archivist;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class FighterDetailsActivity extends AppCompatActivity {
     private Archivist archivist;
@@ -23,9 +23,10 @@ public class FighterDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fighter_details);
 
         // set activity variables
+        //todo: move this to its own thread... somehow...
         archivist = new Archivist(this);
 
-        fighter = archivist.getFighterByName(getIntent().getStringExtra("fighterName"));
+        fighter = archivist.getFighter(getIntent().getStringExtra("fighterName"));
 
         tvName = findViewById(R.id.tv_name);
         tvGenderRace = findViewById(R.id.tv_gender_race);

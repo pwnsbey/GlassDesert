@@ -77,15 +77,16 @@ public class OverviewActivity extends AppCompatActivity implements StatusRowAdap
         archivist.archiveLocation(aionLocation);
 
         // add Locke
-        archivist.archiveFighter("Locke Arran", "Male", "Eynsham");
+        Fighter fighterLocke = new Fighter("Locke Arran", "Male", "Eynsham");
+        archivist.archiveFighter(fighterLocke);
 
         // add Locke's deployment
-        archivist.archiveDeployment(
-                new Deployment(aionLocation, 1, "2:22:22"),
-                "Locke Arran");
+        Deployment lockeDeploy = new Deployment(aionLocation, 1, fighterLocke);
+        lockeDeploy.stageDeployment(30000);
 
         // add Tierras, no deployment because she is cleaning up Locke's mess back at base probably
-        archivist.archiveFighter("Tierras Lin", "Female", "Eynsham");
+        Fighter fighterTierras = new Fighter("Tierras Lin", "Female", "Eynsham");
+        archivist.archiveFighter(fighterTierras);
 
         // add buildings
         archivist.archiveBuilding();

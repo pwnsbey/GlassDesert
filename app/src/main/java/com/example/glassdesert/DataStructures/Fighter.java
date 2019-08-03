@@ -1,10 +1,14 @@
 package com.example.glassdesert.DataStructures;
 
+import com.example.glassdesert.Utility.Archivist;
+import com.example.glassdesert.Utility.ContextBoi;
+
+import java.util.concurrent.TimeUnit;
+
 public class Fighter {
     public String name;
     public String gender;
     public String race;
-    public Deployment deployment = null;
 
     public Fighter (String name,
                     String gender,
@@ -14,17 +18,13 @@ public class Fighter {
         this.race = race;
     }
 
-    public Fighter (String name,
-                    String gender,
-                    String race,
-                    Deployment deployment) {
-        this.name = name;
-        this.gender = gender;
-        this.race = race;
-        this.deployment = deployment;
+    public Deployment getDeployment() {
+        Archivist archivist = new Archivist(ContextBoi.getContext());
+        return archivist.getDeployment(this);
     }
 
     public String getStatusString() {
+        Deployment deployment = getDeployment();
         if (deployment != null)
             return deployment.getDeploymentString();
         else
@@ -33,8 +33,14 @@ public class Fighter {
 
     // returns a "-" if no timer is applicable, otherwise returns the time remaining
     public String getTimeRemaining() {
-        if (deployment != null)
-            return deployment.timeRemaining;
+        Deployment deployment = getDeployment();
+        if (deployment != null) {
+            long msRemaining = deployment.endTime - System.currentTimeMillis();
+            return String.format("%d hours, %d minutes, %d seconds",
+                                 TimeUnit.MILLISECONDS.toHours(msRemaining),
+                                 TimeUnit.MILLISECONDS.toMinutes(msRemaining),
+                                 TimeUnit.MILLISECONDS.toSeconds(msRemaining));
+        }
         else
             return "-";
     }

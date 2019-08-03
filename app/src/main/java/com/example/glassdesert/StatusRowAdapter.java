@@ -6,14 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.glassdesert.DataStructures.Buildings.Building;
 import com.example.glassdesert.DataStructures.Fighter;
 import com.example.glassdesert.DataStructures.Location;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.StatusRowViewHolder> {
     final private ClickListener onClickListener;
@@ -52,7 +52,7 @@ public class StatusRowAdapter extends RecyclerView.Adapter<StatusRowAdapter.Stat
                     addFighter(fighter);
                     break;
                 case 1:
-                    if (fighter.deployment != null)
+                    if (fighter.getDeployment() != null)
                         addFighter(fighter);
             }
         }

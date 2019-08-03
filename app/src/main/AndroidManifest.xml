@@ -9,10 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.DeploymentActivity"></activity>
-        <activity android:name=".Activities.FighterDetailsActivity" />
-        <activity android:name=".Activities.CohortActivity" />
-        <activity android:name=".Activities.OverviewActivity">
+        <receiver android:name=".Utility.AlarmReceiver"/>
+        <activity
+            android:name=".Activities.DeploymentActivity"
+            android:launchMode="singleInstance"
+            ></activity>
+        <activity
+            android:name=".Activities.FighterDetailsActivity"
+            android:launchMode="singleInstance"
+            />
+        <activity
+            android:name=".Activities.CohortActivity"
+            android:launchMode="singleInstance"
+            />
+        <activity
+            android:name=".Activities.OverviewActivity"
+            android:launchMode="singleInstance"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
